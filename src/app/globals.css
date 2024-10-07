@@ -2,32 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Define the default theme variables */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-color: #191A1C;
+  --secondary-color: #4F4F4F;
+  --accent-color: #2C2C2C;
+  --neutral-color: #27272a;
+  --base-color: #000000;
+  --text-color: #FFFFFF;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Dark theme variables */
+[data-theme="light"] {
+  --primary-color: #FFFFFF; /* light-primary */
+  --secondary-color: #F0F1F2; /* light-secondary */
+  --accent-color: #E0E4E6; /* light-accent */
+  --neutral-color: #2a2e37; /* light-neutral */
+  --base-color: #ffffff; /* light-base */
+  --text-color: #000000; /* light-text */
 }
 
+/* Slate theme variables */
+[data-theme="slate"] {
+  --primary-color: #121318;
+  --secondary-color: #26292F;
+  --accent-color: rgb(66,70,91);
+  --neutral-color: #374151;
+  --base-color: #f1f5f9;
+  --text-color: #DEEFEF;
+}
+
+/* Dracula theme variables */
+[data-theme="dracula"] {
+  --primary-color: #282a36;
+  --secondary-color: #343746;
+  --accent-color: rgb(66,70,91);
+  --neutral-color: #44475a;
+  --base-color: #f8f8f2;
+  --text-color: #f8f8f2;
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.bg-secondary-hover:hover {
+  background-color: var(--secondary-color);
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.accent-color {
+  background-color: var(--accent-color);
+}
+
+.base-color {
+  background-color: var(--base-color);
+}
+
+.neutral-color {
+  background-color: var(--neutral-color);
+}
+
+.sidebar-link:hover {
+  background-color: var(--accent-color);
+}
+
+.profile-color:hover {
+  background-color: var(--secondary-color);
+}
+
+.accent-color-hover:hover {
+  background-color: var(--accent-color);
+}
+
+*,*::after,*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-size: 16px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-color: var(--primary-color);
+  width: 100%;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.container {
+  @apply max-w-[1440px] mx-auto
+}
+
+.component-container {
+  @apply p-[20px] lg:p-[30px]
 }
