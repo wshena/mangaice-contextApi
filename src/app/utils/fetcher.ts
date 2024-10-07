@@ -11,20 +11,21 @@ interface FetcherProps {
 // Fungsi fetcher
 const fetcher = async ({ method, params, url }: FetcherProps) => {
   try {
-    // Membuat konfigurasi untuk axios
     const config: AxiosRequestConfig = {
-      method,
-      params,
-      url,
+      method: 'POST',
+      url: '/api/proxy',
+      data: {
+        method,
+        url,
+        params,
+      },
     };
 
-    // Membuat request dengan axios
     const response = await axios.request(config);
     const data = response.data;
 
-    return data; // Mengembalikan data yang diterima dari API
+    return data;
   } catch (error) {
-    // Menampilkan error lebih detail
     if (axios.isAxiosError(error)) {
       console.error('Axios error:', error.response?.data || error.message);
     } else {
