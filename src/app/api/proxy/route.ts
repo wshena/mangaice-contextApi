@@ -2,7 +2,9 @@ export const dynamic = 'force-dynamic'; // Ensure dynamic response
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${url.pathname}${url.search}`; // Build the API URL
+  const host = request.headers.get('host'); // Mengambil host (domain)
+  const baseUrl = host ? `https://${host}` : process.env.NEXT_PUBLIC_BASE_URL;
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${url.pathname}${url.search}`;
 
   try {
     const response = await fetch(apiUrl, {
