@@ -1,38 +1,47 @@
-export const dynamic = 'force-dynamic'; // Ensure dynamic response
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const host = request.headers.get('host'); // Mengambil host (domain)
-  const baseUrl = host ? `https://${host}` : process.env.NEXT_PUBLIC_BASE_URL;
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${url.pathname}${url.search}`;
+  const url = new URL(request.url, `https://${request.headers.get('host')}`);
+
+  // Log URL asli untuk memverifikasi input
+  console.log(`Original request URL: ${url.toString()}`);
+  
+  // Hapus '/api/proxy' dan ambil query params setelahnya
+  const apiPath = url.pathname.replace('/api/proxy', '') + url.search;
+  
+  // Gabungkan URL MangaDex API
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${apiPath}`;
+
+  console.log(`Fetching from MangaDex API: ${apiUrl}`);
 
   try {
     const response = await fetch(apiUrl, {
-      method: 'GET', // Set the method according to your needs
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'MangaiceClient/1.0',
       },
     });
 
-    // Check if the response is okay
     if (!response.ok) {
       throw new Error(`Error fetching data: ${response.status}`);
     }
 
-    // Return the response from the MangaDex API
     const data = await response.json();
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Memungkinkan semua asal
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', // Memungkinkan metode HTTP tertentu
       },
-    });
+    });    
   } catch (error: any) {
     return new Response(JSON.stringify({ message: error.message }), {
       status: error.status || 500,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
     });
   }

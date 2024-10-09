@@ -1,4 +1,3 @@
-import axios, { AxiosRequestConfig } from "axios";
 import { includesCoverArtAuthorArtist, includesScanlationGroupMangaUser } from "./const";
 
 // Interface untuk konfigurasi request
@@ -10,22 +9,27 @@ interface FetcherProps {
 
 // Fungsi fetcher dengan proxy
 const fetcher = async (url: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL; // Gunakan variabel lingkungan untuk URL dasar
-  const fullUrl = `${baseUrl}${url}`; // Endpoint proxy, tambahkan URL API MangaDex
-  
+  const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}`; // URL asli yang akan dipanggil
+  const fullUrl = `${proxyUrl}${apiUrl}`; // Gabungkan proxy dengan URL asli
+
+  console.log(`Requesting from: ${fullUrl}`);
+
   const response = await fetch(fullUrl, {
-    method: 'GET', // Ubah menjadi GET karena kita hanya mengambil data
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
+    console.error(`Error: ${response.status}`);
     throw new Error(`Error: ${response.status}`);
   }
 
   return response.json();
 };
+
 
 // fungsi untuk mendapatkan manga dengan limit
 export const getAllMangaWithLimit = async (limit: number) => {

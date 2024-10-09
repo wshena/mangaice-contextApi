@@ -30,8 +30,8 @@ const LatestUpdatesCard = async ({data}:{data:any}) => {
         <div className="w-full flex flex-col gap-[7px]">
           {/* title */}
           <Link href={`/title/${mangaData?.id}/${getTitle(mangaData?.attributes?.title)}`}>
-            <h1 className='font-bold text-[1rem] hidden md:inline-block'>{sliceParagraph(getTitle(mangaData?.attributes.title), 6)}</h1>
-            <h1 className='font-bold text-[.8rem] md:text-[1rem] md:hidden'>{sliceParagraph(getTitle(mangaData?.attributes.title), 6)}</h1>
+            <h1 className='font-bold text-[1rem] hidden md:inline-block'>{sliceParagraph(getTitle(mangaData?.attributes?.title), 6)}</h1>
+            <h1 className='font-bold text-[.8rem] md:text-[1rem] md:hidden'>{sliceParagraph(getTitle(mangaData?.attributes?.title), 6)}</h1>
           </Link>
 
           <div className="flex flex-items gap-[10px]">
