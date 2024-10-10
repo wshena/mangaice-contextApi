@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+import { hostname } from 'os';
+
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const nextConfig = {
@@ -10,7 +12,10 @@ const nextConfig = {
       },
       {
         hostname: 'placehold.co'
-      }
+      },
+      {
+        hostname: 'mangaice-proxy.vercel.app',
+      },
     ],
   },
 };
