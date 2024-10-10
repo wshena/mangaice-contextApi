@@ -6,6 +6,7 @@ import RecentlyAddManga from "./components/homePage/RecentlyAddManga";
 import PageWrapper from "./components/PageWrapper";
 import { getAllMangaWithLimit, getBestRatingmanga, getLatestMangaUpdate, getPopularMangaToday, getRecentlyAddManga } from "./utils/fetcher";
 import { getMondayOfPreviousWeek } from "./utils/function";
+import axios from "axios";
 
 export default async function Home() {
   	// get the date for one week before

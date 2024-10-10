@@ -44,7 +44,7 @@ const BigLatestUpdateCard = ({data}:{data:any}) => {
         <section className='w-full flex flex-col gap-[10px]'>
           {/* title */}
           <Link href={`/title/${mangaData?.id}/${getTitle(mangaData?.attributes?.title)}`}>
-            <h1 className='pb-[10px] border-b border-b-lightGray font-bold text-[.8rem] md:text-[1.5rem]'>{sliceParagraph(getTitle(mangaData?.attributes.title), 6)}</h1>
+            <h1 className='pb-[10px] border-b border-b-lightGray font-bold text-[.8rem] md:text-[1.5rem]'>{sliceParagraph(getTitle(mangaData?.attributes?.title), 6)}</h1>
           </Link>
 
           {/* chapter data */}

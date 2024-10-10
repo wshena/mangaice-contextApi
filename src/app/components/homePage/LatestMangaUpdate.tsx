@@ -16,7 +16,7 @@ const LatestMangaUpdate = ({data}:{data: any}) => {
 
         {/* latest update mangas */}
         <ul className='grid grid-cols-1 lg:grid-cols-2 gap-[15px]'>
-          {latestMangaUpdateList.map((item:any) => {
+          {latestMangaUpdateList?.map((item:any) => {
             return (
               <li key={item.id}>
                 <LatestUpdatesCard data={item} />

@@ -1,3 +1,4 @@
+import axios, { AxiosRequestConfig } from "axios";
 import { includesCoverArtAuthorArtist, includesScanlationGroupMangaUser } from "./const";
 
 // Interface untuk konfigurasi request
@@ -7,34 +8,35 @@ interface FetcherProps {
   url: string;
 }
 
-// Fungsi fetcher dengan proxy
-const fetcher = async (url: string) => {
-  const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${url}`; // URL asli yang akan dipanggil
-  const fullUrl = `${proxyUrl}${apiUrl}`; // Gabungkan proxy dengan URL asli
+// Fungsi fetcher
+const fetcher = async ({ method, params, url }: FetcherProps) => {
+  try {
+    const config: AxiosRequestConfig = {
+      method,
+      params,
+      url: `https://mangaice-proxy.vercel.app/api?path=${url}`,
+    };
 
-  console.log(`Requesting from: ${fullUrl}`);
-
-  const response = await fetch(fullUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    console.error(`Error: ${response.status}`);
-    throw new Error(`Error: ${response.status}`);
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw error;
   }
-
-  return response.json();
 };
 
-
-// fungsi untuk mendapatkan manga dengan limit
+// Fungsi untuk mendapatkan semua manga dengan limit
 export const getAllMangaWithLimit = async (limit: number) => {
   try {
-    const data = await fetcher(`/manga?${includesCoverArtAuthorArtist}&limit=${limit}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: { limit },
+      url: `/manga&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
@@ -43,12 +45,14 @@ export const getAllMangaWithLimit = async (limit: number) => {
   }
 };
 
-// // fungsi untuk mendapatkan latest manga update
+// fungsi untuk mendapatkan latest manga update
 export const getLatestMangaUpdate = async (date:any, limit: number, offset: number) => {
   try {
-    const data = await fetcher(
-      `/chapter?includes[]=scanlation_group&includes[]=manga&includes[]=user&updatedAtSince=${date}&order[updatedAt]=desc`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: { limit: limit, offset: offset },
+      url: `/chapter&includes[]=scanlation_group&includes[]=manga&includes[]=user&updatedAtSince=${date}&order[updatedAt]=desc`,
+    });
 
     return data;
   } catch (error) {
@@ -57,10 +61,14 @@ export const getLatestMangaUpdate = async (date:any, limit: number, offset: numb
   }
 };
 
-// // fungsi untuk mendapatkan cover art berdasarkan manga id
+// fungsi untuk mendapatkan cover art berdasarkan manga id
 export const getCoverArtFromMangaId = async (id:string) => {
   try {
-    const data = await fetcher(`/cover?manga[]=${id}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {  },
+      url: `/cover?manga[]=${id}`,
+    });
 
     return data.data;
   } catch (error) {
@@ -69,10 +77,17 @@ export const getCoverArtFromMangaId = async (id:string) => {
   }
 };
 
-// // fungsi mendapatkan manga yang baru ditambahkan
+// fungsi mendapatkan manga yang baru ditambahkan
 export const getRecentlyAddManga = async (year:any, date:any, limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?${includesCoverArtAuthorArtist}&year=${year}&createdAtSince=${date}&limit=${limit}&offset=${offset}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga&${includesCoverArtAuthorArtist}&year=${year}&createdAtSince=${date}`,
+    });
 
     return data;
   } catch (error) {
@@ -81,10 +96,17 @@ export const getRecentlyAddManga = async (year:any, date:any, limit:number, offs
   }
 };
 
-// // fungsi untuk mendapatkan best rating manga
+// fungsi untuk mendapatkan best rating manga
 export const getBestRatingmanga = async (limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?${includesCoverArtAuthorArtist}&order[rating]=desc&order[followedCount]=desc&limit=${limit}&offset=${offset}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga&${includesCoverArtAuthorArtist}&order[rating]=desc&order[followedCount]=desc`,
+    });
 
     return data;
   } catch (error) {
@@ -93,11 +115,17 @@ export const getBestRatingmanga = async (limit:number, offset:number) => {
   }
 };
 
-// // fungsi untuk mendapatkan popular manga today
+// fungsi untuk mendapatkan popular manga today
 export const getPopularMangaToday = async (year:any, date:any, limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?${includesCoverArtAuthorArtist}&order[followedCount]=desc&year=${year}&updatedAtSince=${date}&limit=${limit}&offset=${offset}`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga&${includesCoverArtAuthorArtist}&order[followedCount]=desc&year=${year}&updatedAtSince=${date}`,
+    });
 
     return data;
   } catch (error) {
@@ -109,8 +137,11 @@ export const getPopularMangaToday = async (year:any, date:any, limit:number, off
 // fungsi untuk mendapatkan rating manga berdasarkan id manga
 export const getMangaRating = async (id:string) => {
   try {
-    const data = await fetcher(`/statistics/manga/${id}`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/statistics/manga/${id}`,
+    });
 
     return data;
   } catch (error) {
@@ -122,8 +153,11 @@ export const getMangaRating = async (id:string) => {
 // fungsi untuk mendapatkan random data manga
 export const getRandomMangaData = async () => {
   try {
-    const data = await fetcher(`/manga/random?${includesCoverArtAuthorArtist}`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/manga/random&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
@@ -135,8 +169,11 @@ export const getRandomMangaData = async () => {
 // fungsi untuk mendapatkan data manga dari id
 export const getMangaDataFromId = async (id:string) => {
   try {
-    const data = await fetcher(`/manga/${id}?${includesCoverArtAuthorArtist}`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/manga/${id}&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
@@ -148,7 +185,14 @@ export const getMangaDataFromId = async (id:string) => {
 // fungsi untuk mendapatkan manga chapter feed
 export const getMangaChapterFeed = async (id:string, limit:number, offset:number, order:string) => {
   try {
-    const data = await fetcher(`/manga/${id}/feed?${includesScanlationGroupMangaUser}&order[chapter]=${order}&limit=${limit}&offset=${offset}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga/${id}/feed&includes[]=scanlation_group&includes[]=manga&includes[]=user&order[chapter]=${order}`,
+    });
 
     return data;
   } catch (error) {
@@ -160,8 +204,14 @@ export const getMangaChapterFeed = async (id:string, limit:number, offset:number
 // mendapatkan data manga dari title
 export const getMangaFromTitle = async (title:any, limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?title=${title}&${includesCoverArtAuthorArtist}&limit=${limit}&offset=${offset}`
-    );
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga&title=${title}&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
@@ -173,7 +223,11 @@ export const getMangaFromTitle = async (title:any, limit:number, offset:number) 
 // mendapatkan chapter page sesuai dengan chapter id
 export const getChapterPageFromSpesificChapter = async (id:any) => {
   try {
-    const data = await fetcher(`/at-home/server/${id}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/at-home/server/${id}`,
+    });
 
     return data;
   } catch (error) {
@@ -185,7 +239,11 @@ export const getChapterPageFromSpesificChapter = async (id:any) => {
 // fungsi mendapatkan chapter feed dari chapter id spesific
 export const getChapterFeedFromChapterId = async (id:any) => {
   try {
-    const data = await fetcher(`/chapter/${id}?${includesScanlationGroupMangaUser}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/chapter/${id}&${includesScanlationGroupMangaUser}`,
+    });
 
     return data;
   } catch (error) {
@@ -197,7 +255,11 @@ export const getChapterFeedFromChapterId = async (id:any) => {
 // fungsi mendapatkan chapter image dari chapter id spesific
 export const getChapterImage = async (id:any) => {
   try {
-    const data = await fetcher(`/at-home/server/${id}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/at-home/server/${id}`,
+    });
 
     return data;
   } catch (error) {
@@ -209,7 +271,11 @@ export const getChapterImage = async (id:any) => {
 // fungsi untuk mendapatkan semua chapter id dari manga tertentu
 export const getChapterAggregate = async (id:any) => {
   try {
-    const data = await fetcher(`/manga/${id}/aggregate`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/manga/${id}/aggregate`,
+    });
 
     return data;
   } catch (error) {
@@ -221,7 +287,11 @@ export const getChapterAggregate = async (id:any) => {
 // fungsi untuk mendapatkan semua filter tags
 export const getAllTags = async () => {
   try {
-    const data = await fetcher(`/manga/tag`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {},
+      url: `/manga/tag`,
+    });
 
     return data;
   } catch (error) {
@@ -233,7 +303,14 @@ export const getAllTags = async () => {
 // fungsi untuk mendapatkan manga dari title dan filter tags
 export const getMangaFromTitleAndFilter = async (query:string, limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?${query}&${includesCoverArtAuthorArtist}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga&${query}&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
@@ -245,7 +322,14 @@ export const getMangaFromTitleAndFilter = async (query:string, limit:number, off
 // fungsi untuk mendapatkan manga dari tags
 export const getMangaFromTag = async (id:string, limit:number, offset:number) => {
   try {
-    const data = await fetcher(`/manga?includedTags[]=${id}&${includesCoverArtAuthorArtist}`);
+    const data = await fetcher({
+      method: 'GET',
+      params: {
+        limit: limit,
+        offset: offset
+      },
+      url: `/manga?includedTags[]=${id}&${includesCoverArtAuthorArtist}`,
+    });
 
     return data;
   } catch (error) {
