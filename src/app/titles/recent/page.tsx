@@ -42,7 +42,7 @@ const page = async ({ searchParams }: PageProps) => {
                 <Link href={'/'} ><ArrowLeftIcon size={25} className='text-color' /></Link>
                 <h1 className='text-font capitalize text-[1.3rem] md:text-[2rem]'>recently added manga</h1>
               </div>
-              <ul className='flex items-center flex-wrap gap-[10px]'>
+              <ul className='w-fit flex flex-wrap items-center justify-evenly gap-[10px]'>
                 {recentlyAddManga?.data?.map((manga:any) => {
                   return (
                     <li key={manga?.id}>

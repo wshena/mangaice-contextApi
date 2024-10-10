@@ -57,7 +57,7 @@ const Page = async ({ searchParams }: any) => {
             searchMangaData ? (
               hasSearchResults ? (
                 <div className="flex flex-col gap-[20px]">
-                  <ul className="w-fit flex flex-wrap items-center gap-[10px]">
+                  <ul className="w-fit flex flex-wrap items-center justify-evenly gap-[10px]">
                     {searchMangaData.data.map((manga: any) => (
                       <li key={manga.id}>
                         <MediumCard manga={manga} />
