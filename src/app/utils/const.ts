@@ -1,7 +1,7 @@
 
-export const getCoverArt = (mangaId:string, filename:string) => {
-  return `https://uploads.mangadex.org/covers/${mangaId}/${filename}`
-}
+export const getCoverArt = (mangaId: string, filename: string) => {
+  return `https://mangaice-proxy.vercel.app/api/covers/${mangaId}/${filename}`; // Ganti URL dengan proxy
+};
 
 export const getChapterPageImage = (chapterHash: string, fileName: string, dataSaver: boolean) => {
   if (dataSaver)
