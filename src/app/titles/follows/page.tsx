@@ -5,6 +5,7 @@ import { useLibrary } from '@/app/context/LibraryContext'
 import MediumCard from '@/app/components/cards/MediumCard'
 import { useAuthContext } from '@/app/context/AuthContext'
 import { ArrowLeftIcon, TrashIcon } from '@/app/utils/Icon'
+import Image from 'next/image'
 
 const page = () => {
   const {user, isAuthenticated} = useAuthContext();
@@ -48,7 +49,10 @@ const page = () => {
                   </ul>
                 </div>
               ) : (
-                <h1 className="text-center text-[1.5rem]">Your library is empty</h1>
+                <div className="w-full flex flex-col gap-[10px] items-center justify-center">
+                  <Image src={'/libraryEmpty.png'} width={200} height={200} alt='library empty' className='w-[300px] h-[300px]'/>
+                  <h1 className="text-[1.5rem]">Your library is empty</h1>
+                </div>
               )}
             </div>
           ) : (

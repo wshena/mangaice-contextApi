@@ -12,24 +12,38 @@ interface MultipleItemCarouselProps {
   itemProps?: any; // Optional additional props for the item component
 
   // item count for display
-  mobile:number;
-  tablet:number;
-  notbook:number;
-  desktop:number;
-  desktopSidebar:number;
-  large:number;
+  mobile: number;
+  tablet: number;
+  notbook: number;
+  desktop: number;
+  desktopSidebar: number;
+  large: number;
 }
 
-const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({ list, ItemComponent, itemProps, mobile, tablet, notbook, desktop, desktopSidebar, large }) => {
+const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({
+  list,
+  ItemComponent,
+  itemProps,
+  mobile,
+  tablet,
+  notbook,
+  desktop,
+  desktopSidebar,
+  large,
+}) => {
   // Get website theme
   const { theme } = useThemeContext();
 
   // Sidebar click
   const { sidebarClick } = useUtilityContext();
 
-  const [currentIndex, setCurrentIndex] = useState(getItemsToShow(sidebarClick, mobile, tablet, notbook, desktop, large, desktopSidebar));
+  const [currentIndex, setCurrentIndex] = useState(
+    getItemsToShow(sidebarClick, mobile, tablet, notbook, desktop, large, desktopSidebar)
+  );
   const [itemsToShow, setItemsToShow] = useState(1); // Default value for SSR
-  const [isAnimating, setIsAnimating] = useState(false); // State untuk animasi
+  const [isAnimating, setIsAnimating] = useState(false); // State for animation
+  const [touchStartX, setTouchStartX] = useState<number | null>(null); // For detecting swipe start
+  const [touchEndX, setTouchEndX] = useState<number | null>(null); // For detecting swipe end
 
   // Duplicate awal dan akhir elemen untuk infinite loop
   const extendedList = [
@@ -41,9 +55,17 @@ const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({ list, ItemC
   // Update jumlah item saat ukuran layar berubah
   useEffect(() => {
     const handleResize = () => {
-      const newItemsToShow = getItemsToShow(sidebarClick, mobile, tablet, notbook, desktop, large, desktopSidebar);
+      const newItemsToShow = getItemsToShow(
+        sidebarClick,
+        mobile,
+        tablet,
+        notbook,
+        desktop,
+        large,
+        desktopSidebar
+      );
       setItemsToShow(newItemsToShow);
-      setCurrentIndex(newItemsToShow); // Update currentIndex untuk infinite loop
+      setCurrentIndex(newItemsToShow); // Update currentIndex for infinite loop
     };
 
     // Set initial itemsToShow
@@ -71,8 +93,45 @@ const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({ list, ItemC
     }
   };
 
+  // Handle swipe start
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  // Handle swipe move
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.touches[0].clientX);
+  };
+
+  // Handle swipe end
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+
+    const swipeDistance = touchStartX - touchEndX;
+    const minSwipeDistance = 50; // Minimum swipe distance to be considered a swipe
+
+    if (swipeDistance > minSwipeDistance) {
+      // Swipe left
+      setCurrentIndex(currentIndex + itemsToShow);
+      setIsAnimating(true);
+    } else if (swipeDistance < -minSwipeDistance) {
+      // Swipe right
+      setCurrentIndex(currentIndex - itemsToShow);
+      setIsAnimating(true);
+    }
+
+    // Reset swipe positions
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
   return (
-    <div className="relative w-full h-full">
+    <div
+      className="relative w-full h-full"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {list ? (
         <>
           {/* Container untuk slide */}
@@ -110,7 +169,7 @@ const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({ list, ItemC
                   key={index}
                   className={`w-3 h-3 rounded-full focus:outline-none ${
                     index === Math.floor((currentIndex - itemsToShow) / itemsToShow)
-                      ? (theme !== 'dracula' ? 'bg-lightOrange' : 'bg-blue-500')
+                      ? theme !== 'dracula' ? 'bg-lightOrange' : 'bg-blue-500'
                       : 'bg-gray-300'
                   }`}
                   onClick={() => setSlide(index)}

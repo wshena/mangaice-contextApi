@@ -83,7 +83,7 @@ const Page = ({ params }: PageProps) => {
 
           {/* manga data */}
           <div className="flex flex-col gap-[15px]">
-            <ul className="flex items-center flex-wrap gap-[10px]">
+            <ul className="w-fit flex flex-wrap items-center justify-evenly gap-[10px]">
               {mangaData?.data?.map((manga: any) => (
                 <li key={manga?.id}>
                   <MediumCard manga={manga} />

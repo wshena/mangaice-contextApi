@@ -40,7 +40,7 @@ const ProfileMenu = () => {
   
               {/* Settings and Theme Button */}
               <div className="flex items-center justify-between">
-				<Link href={'/settings'} className='hover:underline'>Settings</Link>
+                <Link onClick={handleOffProfileClick} href={'/settings'} className='hover:underline'>Settings</Link>
                 <button onClick={(e: any) => {
                   e.stopPropagation();
                   handleOnThemeClick();

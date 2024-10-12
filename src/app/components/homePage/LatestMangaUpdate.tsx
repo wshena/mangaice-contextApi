@@ -3,6 +3,7 @@ import SectionTitle from '../SectionTitle';
 import LatestUpdatesCard from '../cards/LatestUpdatesCard';
 import SectionWrapper from '../SectionWrapper';
 import LoadingSpinner from '../LoadingSpinner';
+import ViewMoreButton from '../ViewMoreButton';
 
 const LatestMangaUpdate = ({data}:{data: any}) => {
   const latestMangaUpdateList = data?.data;
@@ -24,6 +25,8 @@ const LatestMangaUpdate = ({data}:{data: any}) => {
             )
           })}
         </ul>
+
+        <ViewMoreButton link='/titles/latest' />
       </SectionWrapper>
     ) : (
       <section className='container flex items-center jusitfy-center'>

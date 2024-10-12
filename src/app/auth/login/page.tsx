@@ -34,7 +34,7 @@ const page = () => {
 
   return (
     <PageWrapper>
-      <section className='w-full pt-[81px] lg:py-[40px] h-[100vh] container flex items-center justify-center bg-primary'>
+      <section className='w-full pt-[81px] lg:py-[40px] h-full container flex items-center justify-center bg-primary'>
         <form action={''} onSubmit={handleSubmit} className="bg-secondary text-color p-[.7rem] md:p-[1.2rem] w-[90%] md:w-[500px] h-full md:h-[440px] rounded-[10px] flex flex-col justify-between">
           <h1 className='text-center font-bold text-[1rem] md:text-[1.5rem] capitalize'>login your account</h1>
           <div className="flex flex-col gap-[15px]">
@@ -61,20 +61,23 @@ const page = () => {
             </div>
           </div>
 
-          <button type='submit' className={`block ${theme !== 'dracula' ? 'bg-lightOrange' : 'bg-lightPurple'} capitalize text-center rounded-[5px] py-[.6rem] text-[.8rem] md:text-[1rem]`}>Log in</button>
+          <div className="mt-[20px] flex flex-col gap-[10px]">
+            {errorMessage && 
+              <div className='w-full text-center text-red-500 text-[1rem]'>
+                <h1>{errorMessage}</h1>
+              </div>
+            }
 
-          <div className="w-full flex items-center justify-center">
-            <div className="flex items-center gap-[10px]">
-              <span>New user?</span>
-              <Link href={'/auth/register'} className={`text-[.8rem] md:text-[1rem] ${theme !== 'dracula' ? 'text-lightOrange' : 'text-lightPurple'}`}>Register</Link>
+            <button type='submit' className={`my-[10px] block ${theme !== 'dracula' ? 'bg-lightOrange' : 'bg-lightPurple'} capitalize text-center rounded-[5px] py-[.6rem] text-[.8rem] md:text-[1rem]`}>Log in</button>
+
+            <div className="w-full flex items-center justify-center">
+              <div className="flex items-center gap-[10px]">
+                <span>New user?</span>
+                <Link href={'/auth/register'} className={`text-[.8rem] md:text-[1rem] ${theme !== 'dracula' ? 'text-lightOrange' : 'text-lightPurple'}`}>Register</Link>
+              </div>
             </div>
           </div>
           
-          {errorMessage && 
-            <div className='w-full text-center text-red-500 text-[1rem]'>
-              <h1>{errorMessage}</h1>
-            </div>
-          }
         </form>
       </section>
     </PageWrapper>

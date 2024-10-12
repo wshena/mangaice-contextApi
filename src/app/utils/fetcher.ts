@@ -14,7 +14,7 @@ const fetcher = async ({ method, params, url }: FetcherProps) => {
     const config: AxiosRequestConfig = {
       method,
       params,
-      url: `https://mangaice-proxy.vercel.app/api?path=${url}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api?path=${url}`,
     };
 
     const response = await axios.request(config);

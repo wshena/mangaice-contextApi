@@ -55,14 +55,14 @@ const page = () => {
             {/* username */}
             <div className="flex flex-col gap-[10px]">
               <label htmlFor="username" className='capitalize text-[.8rem] md:text-[1rem]'>username</label>
-              <input type="text" name="username" id="usename" autoComplete='off' className='rounded-[5px] accent-color focus:outline-none focus:rounded-[5px] focus:outline-lightOrange p-[.2rem] rounded-5px] transition-all duration-300 ease-in-out' value={username} onChange={(e) => setUsername(e.target.value)} />
+              <input required type="text" name="username" id="usename" autoComplete='off' className='rounded-[5px] accent-color focus:outline-none focus:rounded-[5px] focus:outline-lightOrange p-[.2rem] rounded-5px] transition-all duration-300 ease-in-out' value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
 
             {/* password */}
             <div className="flex flex-col gap-[10px]">
               <label htmlFor="password" className='capitalize text-[.8rem] md:text-[1rem]'>password</label>
               <div className="flex items-center justify-between">
-                <input type={passwordVisible ? 'text' : 'password'} name="password" id="password" autoComplete='off' className='w-full rounded-[5px] accent-color focus:outline-none focus:rounded-[5px] focus:outline-lightOrange p-[.2rem] rounded-5px] transition-all duration-300 ease-in-out' value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input required type={passwordVisible ? 'text' : 'password'} name="password" id="password" autoComplete='off' className='w-full rounded-[5px] accent-color focus:outline-none focus:rounded-[5px] focus:outline-lightOrange p-[.2rem] rounded-5px] transition-all duration-300 ease-in-out' value={password} onChange={(e) => setPassword(e.target.value)} />
                 {/* Tombol untuk toggle visibilitas password */}
                 <button
                   type="button"
@@ -75,19 +75,19 @@ const page = () => {
             </div>
           </div>
 
-          <div className="mt-[10px] md:mt-0 flex flex-col gap-[15px]">
+          <div className="mt-[20px] flex flex-col gap-[10px]">
             <Link href={'/auth/login'} className='text-[.8rem] md:text-[1rem] flex items-center gap-[10px]'>
               <AngleLeftIcon size={20} className='text-lightOrange' />
               <span className='capitalize text-lightOrange'>back to login</span>
             </Link>
+            {errorMessage && 
+              <div className='w-full text-center text-red-500 text-[1rem]'>
+                <h1>{errorMessage}</h1>
+              </div>
+            }
             <button type='submit' className={`${theme !== 'dracula' ? 'text-lightOrange' : 'text-lightPurple'} text-[.8rem] md:text-[1rem] block bg-lightOrange capitalize text-center rounded-[5px] py-[.6rem] text-white`}>Register</button>
           </div>
 
-          {errorMessage && 
-            <div className='w-full text-center text-red-500 text-[1rem]'>
-              <h1>{errorMessage}</h1>
-            </div>
-          }
         </form>
       </section>
     </PageWrapper>
