@@ -103,12 +103,12 @@ export const ProfileIcon = ({ size, className }: Props) => {
 
 export const UpDownAngleIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 my-auto text-midTone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="m8 9l4-4l4 4m0 6l-4 4l-4-4"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 my-auto text-midTone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m8 9l4-4l4 4m0 6l-4 4l-4-4"></path></svg>
   )
 }
 export const ContentFilterUncheckIcon = () => {
   return (
-    <svg data-v-9ba4cb7e="" data-v-e5d18c36="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="feather feather-square icon text-icon-contrast text-undefined" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
+    <svg data-v-9ba4cb7e="" data-v-e5d18c36="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="feather feather-square icon text-icon-contrast text-undefined" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect></svg>
   )
 }
 
@@ -116,6 +116,6 @@ export const ContentFilterCheckIcon = () => {
   const {theme} = useThemeContext();
 
   return (
-    <svg data-v-9ba4cb7e="" data-v-e5d18c36="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" className="icon text-icon-contrast text-undefined"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path><path stroke={`${theme !== 'dracula' ? 'rgb(255,103,64)' : 'rgb(145,111,173)'}`} stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 11 3 3L22 4"></path></svg>
+    <svg data-v-9ba4cb7e="" data-v-e5d18c36="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" className="icon text-icon-contrast text-undefined"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path><path stroke={`${theme !== 'dracula' ? 'rgb(255,103,64)' : 'rgb(145,111,173)'}`} strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="m9 11 3 3L22 4"></path></svg>
   )
 }

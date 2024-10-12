@@ -1,6 +1,6 @@
 
 export const getCoverArt = (mangaId: string, filename: string) => {
-  const url = `https://mangaice-proxy.vercel.app/api/covers/${mangaId}/${filename}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/covers/${mangaId}/${filename}`;
   
   return url; // Ganti URL dengan proxy
 };

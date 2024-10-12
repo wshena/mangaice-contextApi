@@ -146,14 +146,7 @@ const MultipleItemCarousel: React.FC<MultipleItemCarouselProps> = ({
               onTransitionEnd={handleTransitionEnd}
             >
               {extendedList.map((item: any, index: number) => (
-                <li
-                  key={`${item?.id}-${index}`} // Key harus unik
-                  className="flex-none w-full p-2"
-                  style={{
-                    width: `${100 / itemsToShow}%`,
-                  }}
-                >
-                  {/* Render custom item component */}
+                <li key={`${item?.id}-${index}`} className="flex-none w-full p-2" style={{ width: `${100 / itemsToShow}%` }}>
                   <ItemComponent manga={item} {...itemProps} />
                 </li>
               ))}

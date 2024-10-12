@@ -38,7 +38,7 @@ const page = () => {
                       <span>Clear all</span>
                     </button>
                   </div>
-                  <ul className='flex items-center flex-wrap gap-[10px]'>
+                  <ul className='w-fit flex flex-wrap items-center justify-evenly gap-[10px]'>
                     {user?.library?.map((manga:any) => {
                       return (
                         <li key={manga?.id}>
