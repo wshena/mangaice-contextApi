@@ -1,13 +1,11 @@
 'use client'
 import { useThemeContext } from '@/app/context/ThemeContext';
+import { Themes } from '@/app/utils/const';
 import { ArrowLeftIcon, CheckIcon } from '@/app/utils/Icon';
 import React from 'react'
 
 const ThemeMenu = ({ handleOff }: { handleOff: () => void }) => {
   const { theme, setTheme } = useThemeContext();
-
-  // List of themes
-  const themes = ['light', 'dark', 'slate', 'dracula'];
 
   return (
     <div className="p-4 bg-primary rounded-md">
@@ -28,7 +26,7 @@ const ThemeMenu = ({ handleOff }: { handleOff: () => void }) => {
 
       {/* Theme List */}
       <ul className="space-y-2">
-        {themes.map((t) => {
+        {Themes.map((t) => {
           return (
             <li
               key={t}

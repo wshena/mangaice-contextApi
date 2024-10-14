@@ -25,7 +25,7 @@ const Sidebar = () => {
           {/* logo and close button */}
           <div className="flex items-center justify-between mb-[20px]">
             <Link href={'/'} className="flex items-center gap-[8px]">
-              <Image src={MangadexIcon} width={40} height={35} alt="mangaice" />
+              <Image src={'/mangaiceLogo.png'} width={60} height={60} alt="mangaice" className='w-[60px] h-[60px]'/>
               <h1 className={`text-color font-bold text-[1.3rem]`}>Mangaice</h1>
             </Link>
 

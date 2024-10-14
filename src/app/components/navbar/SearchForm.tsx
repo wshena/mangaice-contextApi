@@ -85,7 +85,7 @@ const SearchForm: React.FC = () => {
         ></div>
       )}
 
-      <div className={`absolute hidden md:block top-[25px] lg:top-[33px] right-[80px] ${isOpen && 'z-50'} search-container`}>
+      <div className={`absolute hidden md:block top-[31px] lg:top-[34px] right-[80px] ${isOpen && 'z-50'} search-container`}>
         <form
           name='search-form'
           id='search-form'

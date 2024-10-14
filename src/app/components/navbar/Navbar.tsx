@@ -1,7 +1,7 @@
 'use client';
 
 import { useUtilityContext } from '@/app/context/UtilityContext';
-import { MangadexIcon, NavbarMenu, SearchIcon } from '@/app/utils/Icon';
+import { NavbarMenu } from '@/app/utils/Icon';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -46,7 +46,7 @@ const Navbar = () => {
               <NavbarMenu size={30} className='text-color' />
             </button>
             <Link href={'/'} className="flex items-center gap-[5px]">
-              <Image src={MangadexIcon} width={40} height={35} alt="mangaice" />
+              <Image src={'/mangaiceLogo.png'} width={60} height={60} alt="mangaice" className='w-[60px] h-[60px]'/>
               <h1 className={`text-color font-bold text-[1.3rem] hidden md:inline-block`}>Mangaice</h1>
             </Link>
           </div>

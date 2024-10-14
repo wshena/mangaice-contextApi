@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Define the default theme variables */
+/* Define the default theme variables (dark) */
 :root {
   --primary-color: #191A1C;
   --secondary-color: #4F4F4F;
@@ -12,7 +12,7 @@
   --text-color: #FFFFFF;
 }
 
-/* Dark theme variables */
+/* Light theme variables */
 [data-theme="light"] {
   --primary-color: #FFFFFF; /* light-primary */
   --secondary-color: #F0F1F2; /* light-secondary */
@@ -101,5 +101,5 @@ body {
 }
 
 .component-container {
-  @apply p-[20px] lg:p-[30px]
+  @apply p-[20px] lg:p-[20px]
 }
