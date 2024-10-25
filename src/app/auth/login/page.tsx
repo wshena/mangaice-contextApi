@@ -34,7 +34,7 @@ const page = () => {
 
   return (
     <PageWrapper>
-      <section className='w-full pt-[81px] lg:py-[40px] h-full container flex items-center justify-center bg-primary'>
+      <section className='w-full pt-[81px] lg:py-[40px] h-full lg:h-[100vh] container flex items-center justify-center bg-primary'>
         <form action={''} onSubmit={handleSubmit} className="bg-secondary text-color p-[.7rem] md:p-[1.2rem] w-[90%] md:w-[500px] h-full md:h-[440px] rounded-[10px] flex flex-col justify-between">
           <h1 className='text-center font-bold text-[1rem] md:text-[1.5rem] capitalize'>login your account</h1>
           <div className="flex flex-col gap-[15px]">
