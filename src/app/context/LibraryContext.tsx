@@ -10,10 +10,10 @@ type LibraryContextType = {
   clearLibrary: () => void;
 };
 
-const HistoryContext = createContext<LibraryContextType | undefined>(undefined);
+const LibraryContext = createContext<LibraryContextType | undefined>(undefined);
 
 export const useLibrary = () => {
-  const context = useContext(HistoryContext);
+  const context = useContext(LibraryContext);
   if (!context) {
     throw new Error('useLibrary must be used within a LibraryProvider');
   }
@@ -70,9 +70,9 @@ const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
 
   return (
-    <HistoryContext.Provider value={{ library, addToLibrary, removeFromLibrary, clearLibrary }}>
+    <LibraryContext.Provider value={{ library, addToLibrary, removeFromLibrary, clearLibrary }}>
       {children}
-    </HistoryContext.Provider>
+    </LibraryContext.Provider>
   );
 };
 
